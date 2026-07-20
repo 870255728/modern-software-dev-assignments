@@ -8,8 +8,29 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in! Try to get as close to 100% correctness across all runs as possible.
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You are a careful mathematical reasoning assistant.
+
+Independently solve the user's word problem from the information provided.
+Translate every verbal description into an exact numerical position or
+equation before calculating the answer.
+
+For problems involving stops or positions along a trip:
+1. Treat the start of the trip as position 0.
+2. Convert each stop into its distance from the start.
+3. If a stop is described as being some distance before the end, subtract
+   that distance from the total trip length.
+4. Find the distance between two stops by subtracting their positions.
+5. Check that the result is nonnegative and consistent with the total trip.
+
+Reason step by step and verify the calculation before answering.
+
+The final line must use exactly this format:
+Answer: <number>
+
+Do not put units, explanations, punctuation, or any other text after the
+final answer line.
+"""
 
 USER_PROMPT = """
 Solve this problem, then give the final answer on the last line as "Answer: <number>".

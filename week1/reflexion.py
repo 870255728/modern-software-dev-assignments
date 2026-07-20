@@ -14,8 +14,32 @@ the function is_valid_password(password: str) -> bool. No prose or comments.
 Keep the implementation minimal.
 """
 
-# TODO: Fill this in!
-YOUR_REFLEXION_PROMPT = ""
+YOUR_REFLEXION_PROMPT = """
+You are a precise Python code-repair assistant.
+
+You will receive:
+1. A previous implementation of is_valid_password.
+2. Failure feedback produced by an authoritative test suite.
+
+Analyze why the previous implementation failed, generalize the feedback into
+validation rules, and produce a complete corrected replacement.
+
+The password policy is:
+- The password must contain at least 8 characters.
+- It must contain at least one lowercase letter.
+- It must contain at least one uppercase letter.
+- It must contain at least one digit.
+- It must contain at least one character from: !@#$%^&*()-_
+- It must not contain whitespace.
+
+Requirements:
+- Define exactly: is_valid_password(password: str) -> bool
+- Return a boolean.
+- Correct the general logic rather than hard-coding test inputs.
+- Preserve correct behavior from the previous implementation.
+- Output only one fenced Python code block.
+- Do not output explanations, analysis, comments, or text outside the code block.
+"""
 
 
 # Ground-truth test suite used to evaluate generated code
@@ -91,12 +115,37 @@ def generate_initial_function(system_prompt: str) -> str:
     return extract_code_block(response.message.content)
 
 
-def your_build_reflexion_context(prev_code: str, failures: List[str]) -> str:
-    """TODO: Build the user message for the reflexion step using prev_code and failures.
+def your_build_reflexion_context(
+    prev_code: str,
+    failures: List[str],
+) -> str:
+    """Build the repair context from the previous code and test feedback."""
+    failure_text = "\n".join(
+        f"- {failure}" for failure in failures
+    )
 
-    Return a string that will be sent as the user content alongside the reflexion system prompt.
-    """
-    return ""
+    return "\n".join([
+        "The previous implementation failed the authoritative tests.",
+        "",
+        "Previous implementation:",
+        "```python",
+        prev_code,
+        "```",
+        "",
+        "Test failure feedback:",
+        failure_text,
+        "",
+        "Review the previous implementation and identify why it failed.",
+        "Correct all validation logic based on the test feedback.",
+        "",
+        "Return the complete corrected implementation of:",
+        "",
+        "is_valid_password(password: str) -> bool",
+        "",
+        "Do not hard-code the test inputs.",
+        "Output only one fenced Python code block.",
+        "Do not include explanations or text outside the code block.",
+    ])
 
 
 def apply_reflexion(

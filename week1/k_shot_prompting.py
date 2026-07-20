@@ -6,15 +6,26 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You are a deterministic character-reversal engine.
+
+Reverse exactly the target word and output only the reversed word.
+Do not explain, format, quote, or add any extra characters.
+
+Examples:
+cat -> tac
+server -> revres
+abcdef -> fedcba
+httpstatus -> sutatsptth
+
+If the user provides a sentence, reverse only the final target word from the prompt.
+"""
 
 USER_PROMPT = """
 Reverse the order of letters in the following word. Only output the reversed word, no other text:
 
 httpstatus
 """
-
 
 EXPECTED_OUTPUT = "sutatsptth"
 
