@@ -15,3 +15,6 @@ ul{list-style:disc;padding-left:1.25rem}
 .action-row button{margin-left:auto}
 .status{min-height:1.25rem;margin:.25rem 0;color:#555}
 .status.error{color:#b42318}
+.note-item{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:.5rem 0}
+.note-controls{display:flex;gap:.4rem;white-space:nowrap}
+.error{color:#b42318;background:#fef3f2;border-radius:4px;padding:.5rem}
