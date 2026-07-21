@@ -5,4 +5,13 @@ section{background:#fff;border:1px solid #eee;border-radius:8px;padding:1rem;mar
 form{display:flex;gap:.5rem;margin-bottom:.5rem}
 input{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px}
 button{padding:.5rem .8rem;border:1px solid #ccc;border-radius:4px;background:#f5f5f5;cursor:pointer}
+button[aria-pressed="true"]{background:#111;color:#fff;border-color:#111}
+button:disabled{cursor:not-allowed;opacity:.55}
 ul{list-style:disc;padding-left:1.25rem}
+.action-toolbar{display:flex;gap:.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:.75rem 0}
+.filters{display:flex;gap:.35rem}
+.action-row{display:flex;align-items:center;gap:.5rem;margin:.4rem 0}
+.action-row input[type="checkbox"]{flex:0 0 auto}
+.action-row button{margin-left:auto}
+.status{min-height:1.25rem;margin:.25rem 0;color:#555}
+.status.error{color:#b42318}

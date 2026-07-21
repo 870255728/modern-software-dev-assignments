@@ -4,6 +4,23 @@ async function fetchJSON(url, options) {
   return res.json();
 }
 
+let actionFilter = 'all';
+const selectedActionIds = new Set();
+
+function setActionStatus(message, isError = false) {
+  const status = document.getElementById('action-status');
+  status.textContent = message;
+  status.classList.toggle('error', isError);
+}
+
+function updateBulkCompleteButton() {
+  const button = document.getElementById('bulk-complete');
+  button.disabled = selectedActionIds.size === 0;
+  button.textContent = selectedActionIds.size
+    ? `Complete selected (${selectedActionIds.size})`
+    : 'Complete selected';
+}
+
 async function loadNotes() {
   const list = document.getElementById('notes');
   list.innerHTML = '';
@@ -17,21 +34,60 @@ async function loadNotes() {
 
 async function loadActions() {
   const list = document.getElementById('actions');
-  list.innerHTML = '';
-  const items = await fetchJSON('/action-items/');
-  for (const a of items) {
-    const li = document.createElement('li');
-    li.textContent = `${a.description} [${a.completed ? 'done' : 'open'}]`;
-    if (!a.completed) {
-      const btn = document.createElement('button');
-      btn.textContent = 'Complete';
-      btn.onclick = async () => {
-        await fetchJSON(`/action-items/${a.id}/complete`, { method: 'PUT' });
-        loadActions();
-      };
-      li.appendChild(btn);
+  const query = actionFilter === 'all'
+    ? ''
+    : `?completed=${actionFilter === 'completed'}`;
+
+  try {
+    const items = await fetchJSON(`/action-items/${query}`);
+    list.innerHTML = '';
+    const visibleIds = new Set(items.map((item) => item.id));
+    for (const id of selectedActionIds) {
+      if (!visibleIds.has(id)) selectedActionIds.delete(id);
     }
-    list.appendChild(li);
+
+    for (const a of items) {
+      const li = document.createElement('li');
+      li.className = 'action-row';
+
+      if (!a.completed) {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = selectedActionIds.has(a.id);
+        checkbox.setAttribute('aria-label', `Select ${a.description}`);
+        checkbox.onchange = () => {
+          if (checkbox.checked) selectedActionIds.add(a.id);
+          else selectedActionIds.delete(a.id);
+          updateBulkCompleteButton();
+        };
+        li.appendChild(checkbox);
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Complete';
+        btn.onclick = async () => {
+          btn.disabled = true;
+          setActionStatus('');
+          try {
+            await fetchJSON(`/action-items/${a.id}/complete`, { method: 'PUT' });
+            selectedActionIds.delete(a.id);
+            await loadActions();
+            setActionStatus(`Completed "${a.description}".`);
+          } catch (error) {
+            btn.disabled = false;
+            setActionStatus(`Could not complete item: ${error.message}`, true);
+          }
+        };
+        li.appendChild(btn);
+      }
+
+      const description = document.createElement('span');
+      description.textContent = `${a.description} [${a.completed ? 'done' : 'open'}]`;
+      li.insertBefore(description, li.lastChild);
+      list.appendChild(li);
+    }
+    updateBulkCompleteButton();
+  } catch (error) {
+    setActionStatus(`Could not load action items: ${error.message}`, true);
   }
 }
 
@@ -52,13 +108,55 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('action-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const description = document.getElementById('action-desc').value;
-    await fetchJSON('/action-items/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description }),
+    setActionStatus('');
+    try {
+      await fetchJSON('/action-items/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description }),
+      });
+      e.target.reset();
+      await loadActions();
+      setActionStatus('Action item added.');
+    } catch (error) {
+      setActionStatus(`Could not add action item: ${error.message}`, true);
+    }
+  });
+
+  document.querySelectorAll('#action-filters button').forEach((button) => {
+    button.addEventListener('click', async () => {
+      actionFilter = button.dataset.filter;
+      selectedActionIds.clear();
+      document.querySelectorAll('#action-filters button').forEach((filterButton) => {
+        filterButton.setAttribute('aria-pressed', filterButton === button ? 'true' : 'false');
+      });
+      setActionStatus('');
+      updateBulkCompleteButton();
+      await loadActions();
     });
-    e.target.reset();
-    loadActions();
+  });
+
+  document.getElementById('bulk-complete').addEventListener('click', async () => {
+    const ids = [...selectedActionIds];
+    if (!ids.length) return;
+
+    const button = document.getElementById('bulk-complete');
+    button.disabled = true;
+    setActionStatus('');
+    try {
+      await fetchJSON('/action-items/bulk-complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      });
+      selectedActionIds.clear();
+      await loadActions();
+      setActionStatus(`Completed ${ids.length} action item${ids.length === 1 ? '' : 's'}.`);
+    } catch (error) {
+      setActionStatus(`Could not complete selected items: ${error.message}`, true);
+    } finally {
+      updateBulkCompleteButton();
+    }
   });
 
   loadNotes();
