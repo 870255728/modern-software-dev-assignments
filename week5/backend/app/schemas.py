@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from pydantic import BaseModel, Field, PositiveInt, field_validator
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt, field_validator
 
 
 class NoteCreate(BaseModel):
@@ -14,12 +14,11 @@ class NoteUpdate(BaseModel):
 
 
 class NoteRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
     content: str
-
-    class Config:
-        from_attributes = True
 
 
 class ActionItemCreate(BaseModel):
@@ -27,12 +26,11 @@ class ActionItemCreate(BaseModel):
 
 
 class ActionItemRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     description: str
     completed: bool
-
-    class Config:
-        from_attributes = True
 
 
 class ActionItemsBulkComplete(BaseModel):
