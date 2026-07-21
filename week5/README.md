@@ -54,6 +54,19 @@ cd week5 && make format
 cd week5 && make lint
 ```
 
+If GNU Make is unavailable, run the repository quality gate instead:
+
+```bash
+cd week5 && bash scripts/quality_gate.sh backend/tests
+```
+
+## Completed Assignment Tasks
+
+- **Task 3 (medium):** full Notes update/delete APIs, validation, and optimistic UI updates with rollback.
+- **Task 4 (medium):** Action Item completion filters, transactional bulk completion, and bulk-selection UI.
+
+See [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md) for API contracts and architecture. The reusable Warp YAML definitions are in [`.warp/workflows/`](.warp/workflows/), and [`docs/WARP_MULTI_AGENT_PLAYBOOK.md`](docs/WARP_MULTI_AGENT_PLAYBOOK.md) explains how to reproduce the concurrent Agent workflow. For a lab presentation, use [`docs/LAB_PRESENTATION_GUIDE.md`](docs/LAB_PRESENTATION_GUIDE.md).
+
 ## Configuration
 
-Copy `.env.example` to `.env` (in `week5/`) to override defaults like the database path.
+Set `DATABASE_PATH` in the environment or a local `.env` file to override the default SQLite path (`./data/app.db`). Do not commit local databases, credentials, or machine-specific environment values.
