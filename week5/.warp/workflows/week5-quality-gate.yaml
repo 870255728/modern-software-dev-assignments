@@ -1,0 +1,17 @@
+name: Week 5 Quality Gate
+command: cd {{week5_dir}} && bash scripts/quality_gate.sh {{test_scope}}
+tags:
+  - week5
+  - testing
+  - fastapi
+description: Run pytest, Ruff, Black, and Git whitespace checks for the Week 5 app.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: week5_dir
+    description: Absolute path to the Week 5 assignment directory.
+    default_value: /root/modern-software-dev-assignments/week5
+  - name: test_scope
+    description: Pytest path or test selector to run.
+    default_value: backend/tests

@@ -1,0 +1,17 @@
+name: Week 5 Agent Worktrees
+command: cd {{week5_dir}} && bash scripts/setup_agent_worktrees.sh {{worktree_root}}
+tags:
+  - week5
+  - git
+  - multi-agent
+description: Idempotently prepare isolated Git worktrees for the two Week 5 feature agents.
+shells:
+  - zsh
+  - bash
+arguments:
+  - name: week5_dir
+    description: Absolute path to the Week 5 assignment directory.
+    default_value: /root/modern-software-dev-assignments/week5
+  - name: worktree_root
+    description: Parent directory for isolated agent worktrees.
+    default_value: /root/worktrees
