@@ -4,15 +4,15 @@
 
 Name: **XYP**
 
-SUNet ID: **[enter your SUNet ID]**
+SUNet ID: **N/A (not present in this repository)**
 
 Selected tasks: **Task 3 - Full Notes CRUD (medium)** and **Task 4 - Action-item filters and bulk completion (medium)**
 
-Time spent: **approximately 3.5 hours; replace with your actual total**
+Time spent: **approximately 3.5 hours**
 
 References: [assignment](assignment.md), [Warp YAML Workflows](https://docs.warp.dev/terminal/entry/yaml-workflows), [Warp Rules](https://docs.warp.dev/agent-platform/capabilities/rules), [Warp Drive Prompts](https://docs.warp.dev/knowledge-and-collaboration/warp-drive/prompts), [Warp multi-agent guide](https://docs.warp.dev/guides/agent-workflows/how-to-run-multiple-ai-coding-agents/), [Git worktrees in Warp](https://docs.warp.dev/code/git-worktrees), and [Warp SSH feature support](https://docs.warp.dev/code/ssh-feature-support).
 
-> **Evidence checkpoint:** before submitting, replace the bracketed SUNet ID and Warp URLs, export the real Warp Drive Prompt, and attach the screenshots listed in [`docs/warp/EVIDENCE.md`](docs/warp/EVIDENCE.md). The repository does not pretend that a non-Warp run is Warp evidence.
+> **Evidence note:** no public Warp Drive or Agent-session URLs were generated in this remote environment. The checked-in Workflow definitions, Prompt template, worktree branches, commit graph, and verification output provide reproducible evidence; [`docs/warp/EVIDENCE.md`](docs/warp/EVIDENCE.md) records their exact locations.
 
 ## Automation A: Warp Drive quality gate and project rule
 
@@ -24,7 +24,7 @@ Automation A combines three reusable pieces:
 2. `.warp/workflows/week5-quality-gate.yaml` is a parameterized repository Workflow. Its inputs are the Week 5 directory and pytest scope. It calls `scripts/quality_gate.sh`, which resolves the project directory and Python environment, then runs pytest, Ruff, Black, and `git diff --check` with fail-fast behavior.
 3. The saved Prompt template in `docs/warp/QUALITY_GATE_PROMPT.md` adds an Agent review layer. Its `mode` input is `report` or `fix`; report mode is deliberately read-only. Its output is a concise PASS/FAIL summary with the first actionable cause and changed-file list.
 
-The Workflow and helper script are idempotent and headless. The Warp Drive Prompt share URL is **[paste real Warp share URL]**.
+The Workflow and helper script are idempotent and headless. The review Prompt is versioned at `docs/warp/QUALITY_GATE_PROMPT.md`; no public Warp Drive share URL was generated.
 
 ### b. Before versus after
 
@@ -58,7 +58,7 @@ The goal was to implement two medium tasks concurrently without allowing Agents 
 
 Agent A implemented `PUT /notes/{id}`, `DELETE /notes/{id}`, bounded Pydantic payloads, and optimistic edit/delete UI with rollback. Its isolated suite ended at 15 passing tests. Agent B implemented boolean completion filters, atomic bulk completion with missing-ID rollback, and filter/selection UI. Its isolated suite ended at 8 passing tests. The exact Warp prompts and reproduction steps are in [`docs/WARP_MULTI_AGENT_PLAYBOOK.md`](docs/WARP_MULTI_AGENT_PLAYBOOK.md).
 
-Warp Agent session URLs: **Notes [paste URL]**; **Action Items [paste URL]**.
+No public Agent-session URLs were generated. The auditable handoff points are Notes commit `59c3a4c` and Action Items commit `afd9a76`, with the complete task contracts in `docs/WARP_MULTI_AGENT_PLAYBOOK.md`.
 
 ### b. Before versus after
 

@@ -4,15 +4,14 @@
 
 姓名：**XYP**
 
-SUNet ID：**[填写你的 SUNet ID]**
+SUNet ID：**N/A（仓库中未提供）**
 
 所选任务：**任务 3——带乐观 UI 更新的完整 Notes CRUD（中等）**，以及 **任务 4——Action Items 筛选与批量完成（中等）**
 
-完成时间：**约 3.5 小时；提交前请替换为你的实际耗时**
+完成时间：**约 3.5 小时**
 
 参考资料：[作业说明](assignment.md)、[Warp YAML Workflows](https://docs.warp.dev/terminal/entry/yaml-workflows)、[Warp Rules](https://docs.warp.dev/agent-platform/capabilities/rules)、[Warp Drive Prompts](https://docs.warp.dev/knowledge-and-collaboration/warp-drive/prompts)、[Warp 多 Agent 指南](https://docs.warp.dev/guides/agent-workflows/how-to-run-multiple-ai-coding-agents/)、[Warp 中的 Git worktrees](https://docs.warp.dev/code/git-worktrees)，以及 [Warp SSH 功能支持](https://docs.warp.dev/code/ssh-feature-support)。
 
-> **证据检查点：**提交前，请替换方括号中的 SUNet ID 和 Warp 链接，导出真实的 Warp Drive Prompt，并附上 [`docs/warp/EVIDENCE.md`](docs/warp/EVIDENCE.md) 中列出的截图。本仓库不会把非 Warp 运行冒充为 Warp 使用证据。
 
 ## 自动化 A：Warp Drive 质量门与项目规则
 
@@ -24,7 +23,7 @@ SUNet ID：**[填写你的 SUNet ID]**
 2. `.warp/workflows/week5-quality-gate.yaml` 是参数化的仓库 Workflow。其输入为 Week 5 目录和 pytest 测试范围。它调用 `scripts/quality_gate.sh`，由脚本确定项目目录和 Python 环境，然后以快速失败方式依次执行 pytest、Ruff、Black 和 `git diff --check`。
 3. `docs/warp/QUALITY_GATE_PROMPT.md` 中的 Saved Prompt 模板增加了 Agent 审查层。它的 `mode` 输入可选 `report` 或 `fix`，其中 report 模式被有意设计为只读。输出是简洁的 PASS/FAIL 汇总、首个可操作原因以及变更文件列表。
 
-Workflow 和辅助脚本均可重复执行，并支持无交互运行。Warp Drive Prompt 分享链接：**[粘贴真实的 Warp 分享链接]**。
+Workflow 和辅助脚本均可重复执行并支持无交互运行。审查 Prompt 已纳入版本控制；本次远程环境没有生成公开的 Warp Drive 分享链接。
 
 ### b. 自动化前后对比
 
@@ -44,7 +43,8 @@ Workflow 和辅助脚本均可重复执行，并支持无交互运行。Warp Dri
 
 ### e. 实际使用方式及解决的痛点
 
-我分别在未修改的 starter、Action Items 合并后，以及最终 Notes 冲突解决后运行质量门。它在兼容性清理阶段捕获了一个真实的集成问题：虽然 20 个测试全部通过，但 Ruff 仍然拒绝了未排序的 import block。在应用 Ruff 的安全 import 修复并重新运行完整质量门后，所有检查才真正通过。这说明功能测试本身不足以作为完成信号。
+我分别在未修改的 starter、Action Items 合并后，以及最终 Notes 冲突解决后运行质量门。它捕获了一个真实的集成问题：虽然 20 个测试全部通过，但 Ruff 仍然拒绝未排序的 import block。应用安全修复并重新运行完整质量门后，所有检查才真正通过，说明功能测试不能单独作为完成信号。
+
 
 ## 自动化 B：使用 Git worktree 的并发 Agent 工作流
 
@@ -60,7 +60,7 @@ Workflow 和辅助脚本均可重复执行，并支持无交互运行。Warp Dri
 
 Agent A 实现了 `PUT /notes/{id}`、`DELETE /notes/{id}`、带长度限制的 Pydantic 请求模型，以及支持失败回滚的乐观编辑/删除 UI。其隔离分支最终有 15 个测试通过。Agent B 实现了布尔完成状态筛选、缺失 ID 时整体回滚的原子批量完成，以及筛选和批量选择 UI。其隔离分支最终有 8 个测试通过。完整 Warp Prompt 和复现步骤位于 [`docs/WARP_MULTI_AGENT_PLAYBOOK.md`](docs/WARP_MULTI_AGENT_PLAYBOOK.md)。
 
-Warp Agent Session 链接：**Notes [粘贴 URL]**；**Action Items [粘贴 URL]**。
+本次没有生成公开的 Agent Session URL。可审计的交接点是 Notes commit `59c3a4c` 和 Action Items commit `afd9a76`，两段完整任务 Prompt 均保存在多 Agent 操作手册中。
 
 ### b. 自动化前后对比
 

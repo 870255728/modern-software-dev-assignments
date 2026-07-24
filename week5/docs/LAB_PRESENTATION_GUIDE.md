@@ -1,5 +1,7 @@
 # 实验室汇报指南：用 Warp 完成 Week 5
 
+> 演示时的逐分钟顺序、对应文件和可复制命令见 [`REPORT_RUNBOOK.md`](REPORT_RUNBOOK.md)。本文档主要提供讲稿和问答。
+
 ## 汇报目标
 
 建议控制在 12-15 分钟。主线不是“AI 帮我写了多少代码”，而是：**把一个模糊开发任务变成可约束、可并行、可验证、可复现的 Agent 工作流。**
@@ -83,8 +85,7 @@ week5-task4     -> Action Items Agent
 
 ## 汇报前检查
 
-- 把真实 Warp Prompt 分享链接填入 `writeup.md`。
-- 截图两个 Agent 并发、两个提交、最终 PASS。
-- 将个人姓名、SUNet ID 和真实耗时填入 writeup。
+- 核对 `writeup.md` 与 `writeup_zh.md` 中的姓名、SUNet 状态和耗时。
+- 如有 Warp 客户端，可补充两个 Agent 并发和最终 PASS 截图；没有时展示版本化 Workflow、commit graph 和现场质量门。
 - 确认前端演示数据已准备，SSH tunnel 正常。
 - 确认远程分支已推送，GitHub collaborators 已添加。
