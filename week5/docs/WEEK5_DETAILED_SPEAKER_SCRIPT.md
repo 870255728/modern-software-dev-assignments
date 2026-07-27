@@ -1,5 +1,7 @@
 # Week 5 逐句展示讲稿
 
+> **汇报人私有材料：不要投屏展示。** 本文只用于提示台词、切屏顺序、时间控制和故障备用方案。观众应看到 `docs/WEEK5_PRESENTATION.md` 及其中列出的项目证据文件。
+
 ## 使用方法
 
 这份文档用于现场照稿讲解。每个步骤包含三种标记：
@@ -19,12 +21,12 @@
 **【操作】** 提前准备以下窗口，不要现场临时寻找文件：
 
 1. 浏览器：GitHub 上的 `docs/WEEK5_PRESENTATION.md`。
-2. 编辑器：`assignment.md` 和 `docs/TASKS.md`。
-3. 编辑器：`docs/IMPLEMENTATION.md`。
-4. 编辑器：`AGENTS.md`。
+2. 编辑器：`docs/WEEK5_PRESENTATION.md` 的“项目目标”和 `docs/TASKS_ZH.md`。
+3. 编辑器：`docs/IMPLEMENTATION_ZH.md`。
+4. 编辑器：`docs/AGENT_RULES_ZH.md`。
 5. 编辑器：`.warp/workflows/week5-quality-gate.yaml`。
 6. 编辑器：`scripts/quality_gate.sh`。
-7. 编辑器：`docs/WARP_MULTI_AGENT_PLAYBOOK.md`。
+7. 编辑器：`docs/WARP_MULTI_AGENT_PLAYBOOK_ZH.md`。
 8. 终端：主仓库 `/root/modern-software-dev-assignments`。
 9. 浏览器：`http://localhost:8000`。
 10. 浏览器：`http://localhost:8000/docs`。
@@ -83,7 +85,7 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 
 ### 2.1 展示作业要求
 
-**【操作】** 打开 `assignment.md`，滚动到 “Part I: Build Your Automation”。
+**【操作】** 打开 `docs/WEEK5_PRESENTATION.md`，滚动到“项目目标”。
 
 **【讲稿 1】**
 
@@ -99,7 +101,7 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 
 ### 2.2 展示所选任务
 
-**【操作】** 打开 `docs/TASKS.md`，分别定位 Task 3 和 Task 4。
+**【操作】** 打开 `docs/TASKS_ZH.md`，分别定位“任务 3”和“任务 4”。
 
 **【讲稿 4】**
 
@@ -119,7 +121,7 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 
 ## 3. 原始项目架构（约 1.5 分钟）
 
-**【操作】** 打开 `docs/IMPLEMENTATION.md`，展示 Mermaid 架构图。
+**【操作】** 打开 `docs/IMPLEMENTATION_ZH.md`，展示 Mermaid 架构图。
 
 **【讲稿 1】**
 
@@ -153,15 +155,15 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 
 ---
 
-## 4. Automation A：AGENTS.md Project Rule（约 2 分钟）
+## 4. Automation A：Agent 项目规则（约 2 分钟）
 
 ### 4.1 为什么需要规则
 
-**【操作】** 打开 `AGENTS.md`，依次指向 Project Structure、Testing Guidelines 和 Agent-Specific Instructions。
+**【操作】** 打开 `docs/AGENT_RULES_ZH.md`，依次指向“项目结构”“测试规范”和“Agent 权限边界”。
 
 **【讲稿 1】**
 
-> 第一个自动化组件是 `AGENTS.md`。它不是某一个具体任务的 Prompt，而是所有 Agent 都必须遵守的项目规则。
+> 第一个自动化组件是项目 Rule。屏幕上是 `AGENTS.md` 的中文等价摘要；英文原件仍保存在仓库根目录。它不是某一个具体任务的 Prompt，而是所有 Agent 都必须遵守的项目规则。
 
 **【讲稿 2】**
 
@@ -273,7 +275,7 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 
 ## 6. Automation B：两个 Agent 的任务划分（约 2 分钟）
 
-**【操作】** 打开 `docs/WARP_MULTI_AGENT_PLAYBOOK.md`，显示两个 Agent Prompt。
+**【操作】** 打开 `docs/WARP_MULTI_AGENT_PLAYBOOK_ZH.md`，显示两个中文任务 Prompt。
 
 **【讲稿 1】**
 
@@ -503,7 +505,7 @@ bash scripts/quality_gate.sh backend/tests
 
 ## 11. Warp 额度限制的说明（约 30 秒）
 
-**【操作】** 打开 `docs/warp/EVIDENCE.md`。
+**【操作】** 打开 `docs/warp/EVIDENCE_ZH.md`。
 
 **【讲稿 1】**
 
@@ -523,7 +525,7 @@ bash scripts/quality_gate.sh backend/tests
 
 ## 12. 总结（约 1 分钟）
 
-**【操作】** 回到 `docs/WEEK5_PRESENTATION.md` 的“总结讲稿”。
+**【操作】** 回到 `docs/WEEK5_PRESENTATION.md` 的“工程结论”。
 
 **【讲稿 1】**
 
@@ -589,7 +591,7 @@ bash scripts/quality_gate.sh backend/tests
 
 > 现场 SSH tunnel 出现连接问题，我使用已经验证过的 API smoke test 和测试结果作为备用证据。此前 `/`、`/openapi.json`、`/notes/` 和筛选后的 `/action-items/` 均返回 200。
 
-**【操作】** 改为展示 `docs/IMPLEMENTATION.md` 和测试文件。
+**【操作】** 改为展示 `docs/IMPLEMENTATION_ZH.md` 和测试文件。
 
 ### 14.2 质量门现场失败
 
@@ -611,22 +613,23 @@ bash scripts/quality_gate.sh backend/tests
 
 严格按照下面顺序切换，汇报会最连贯：
 
-1. `docs/WEEK5_PRESENTATION.md`——标题与总体流程。
-2. `assignment.md`——作业的 A/B 两类要求。
-3. `docs/TASKS.md`——Task 3 与 Task 4。
-4. `docs/IMPLEMENTATION.md`——架构图和 API 合约。
-5. `AGENTS.md`——项目规则和权限边界。
-6. `.warp/workflows/week5-quality-gate.yaml`——Warp Workflow 参数。
-7. `scripts/quality_gate.sh`——四层质量门。
-8. `docs/WARP_MULTI_AGENT_PLAYBOOK.md`——两个 Agent Prompt。
-9. 终端 `git worktree list`——目录和分支隔离。
-10. 终端 `git log --graph`——两个 feature commit 与 merge。
-11. `writeup_zh.md`——冲突、权限和反思。
-12. Web UI——Notes 和 Action Items。
-13. Swagger `/docs`——validation 和事务失败路径。
-14. 终端质量门——20 passed。
-15. `docs/warp/EVIDENCE.md`——证据与额度限制。
-16. 本文总结部分——收尾和问答。
+1. `docs/WEEK5_PRESENTATION.md`——标题、作业目标与总体流程。
+2. `docs/TASKS_ZH.md`——任务 3、任务 4 与选题理由。
+3. `docs/IMPLEMENTATION_ZH.md`——架构图和 API 合约。
+4. `docs/AGENT_RULES_ZH.md`——项目规则和权限边界。
+5. `.warp/workflows/week5-quality-gate.yaml`——Warp Workflow 参数。
+6. `scripts/quality_gate.sh`——四层质量门。
+7. `docs/WARP_MULTI_AGENT_PLAYBOOK_ZH.md`——两个中文任务 Prompt。
+8. 终端 `git worktree list`——目录和分支隔离。
+9. 终端 `git log --graph`——两个 feature commit 与 merge。
+10. `writeup_zh.md`——冲突、权限和反思。
+11. Web UI——Notes 和 Action Items。
+12. Swagger `/docs`——校验和事务失败路径。
+13. 终端质量门——20 passed。
+14. `docs/warp/EVIDENCE_ZH.md`——证据与额度限制。
+15. `docs/WEEK5_PRESENTATION.md` 的“工程结论”——收尾。
+
+`WEEK5_DETAILED_SPEAKER_SCRIPT.md`、`REPORT_RUNBOOK.md` 和 `LAB_PRESENTATION_GUIDE.md` 只供汇报人查看，不属于投屏材料。
 
 ## 16. 上台前最后检查
 

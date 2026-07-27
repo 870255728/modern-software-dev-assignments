@@ -23,12 +23,14 @@ This file indexes the reproducible evidence available in the repository. No publ
 | Notes Agent | `week5-task3` | `/root/worktrees/week5-task3` | Feature commit `59c3a4c`; no public session URL |
 | Action Agent | `week5-task4` | `/root/worktrees/week5-task4` | Feature commit `afd9a76`; no public session URL |
 
-Recommended screenshots when presenting from Warp:
+## Evidence availability
 
-1. Both Warp Agent tabs active at the same time, with each branch/path visible.
-2. Notes Agent final summary and commit.
-3. Action Agent final summary and commit.
-4. Integration merge result and final Quality Gate PASS.
+| Artifact | Availability |
+| --- | --- |
+| Concurrent Warp Agent tabs | Not captured; paid Agent quota was unavailable |
+| Notes feature result | Commit `59c3a4c` and isolated test result |
+| Action Items feature result | Commit `afd9a76` and isolated test result |
+| Integration result | Merge history, resolved conflict files, and final Quality Gate PASS |
 
 ## Reproducible verification
 

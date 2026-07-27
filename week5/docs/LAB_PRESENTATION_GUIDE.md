@@ -1,5 +1,7 @@
 # 实验室汇报指南：用 Warp 完成 Week 5
 
+> **汇报人私有材料：不要投屏展示。** 本文包含时间安排、讲稿、窗口准备和问答提示；观众版材料为 [`WEEK5_PRESENTATION.md`](WEEK5_PRESENTATION.md)。
+>
 > 演示时的逐分钟顺序、对应文件和可复制命令见 [`REPORT_RUNBOOK.md`](REPORT_RUNBOOK.md)。本文档主要提供讲稿和问答。
 
 ## 汇报目标
@@ -16,7 +18,7 @@
 
 ### 2. 基线与约束（2 分钟）
 
-展示 `AGENTS.md`，重点解释：只改 `week5/`、保持 API 兼容、每个新行为必须有测试、禁止 Agent 自行 merge/push。展示改动前 `3 passed` 的基线。
+展示 `docs/AGENT_RULES_ZH.md`，重点解释：只改 `week5/`、保持 API 兼容、每个新行为必须有测试、禁止 Agent 自行 merge/push。展示改动前 `3 passed` 的基线。
 
 > 规则负责约束“Agent 应该怎样工作”，不是描述某一个具体任务。这样两个 Agent 会共享同一套工程标准。
 

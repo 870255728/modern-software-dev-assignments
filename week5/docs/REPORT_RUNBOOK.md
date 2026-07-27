@@ -1,5 +1,7 @@
 # Week 5 汇报运行手册
 
+> **汇报人私有材料：不要投屏展示。** 本文只用于控制顺序、执行命令和核对现场状态；观众版材料为 [`WEEK5_PRESENTATION.md`](WEEK5_PRESENTATION.md)。
+
 ## 一句话主线
 
 > 我没有把任务简单地交给一个 Agent，而是把开发过程设计成“规则约束、worktree 隔离、并发实现、质量门验证、人工集成”的可复现工作流。
@@ -8,10 +10,10 @@
 
 | 时间 | 讲解主题 | 展示的文件或命令 | 要证明的结论 |
 | --- | --- | --- | --- |
-| 0:00-1:00 | 作业目标和选题 | `assignment.md`、`docs/TASKS.md` | 选了 Task 3、Task 4，均为 medium |
-| 1:00-2:30 | 原始架构 | `docs/IMPLEMENTATION.md` 的 Mermaid 图 | 前端、FastAPI、Pydantic、SQLAlchemy、SQLite 的调用关系 |
-| 2:30-4:30 | Automation A | `AGENTS.md`、`.warp/workflows/week5-quality-gate.yaml`、`scripts/quality_gate.sh` | Rule 约束 Agent；Workflow 统一验证标准 |
-| 4:30-7:30 | Automation B | `docs/WARP_MULTI_AGENT_PLAYBOOK.md`、`git worktree list` | 两个 Agent 在独立 worktree 并发，不会互相覆盖 |
+| 0:00-1:00 | 作业目标和选题 | `docs/WEEK5_PRESENTATION.md`、`docs/TASKS_ZH.md` | 选了任务 3、任务 4，均为中等难度 |
+| 1:00-2:30 | 原始架构 | `docs/IMPLEMENTATION_ZH.md` 的 Mermaid 图 | 前端、FastAPI、Pydantic、SQLAlchemy、SQLite 的调用关系 |
+| 2:30-4:30 | Automation A | `docs/AGENT_RULES_ZH.md`、`.warp/workflows/week5-quality-gate.yaml`、`scripts/quality_gate.sh` | Rule 约束 Agent；Workflow 统一验证标准 |
+| 4:30-7:30 | Automation B | `docs/WARP_MULTI_AGENT_PLAYBOOK_ZH.md`、`git worktree list` | 两个工作单元在独立 worktree 中隔离，不会互相覆盖 |
 | 7:30-9:00 | 冲突与人工监督 | `git log --graph`、`writeup_zh.md` 的 B.d | 隔离不等于零冲突；schema/CSS 需要人工合并 |
 | 9:00-12:00 | 功能演示 | Web UI、`/docs` | Notes CRUD/回滚；Action 筛选/批量完成/事务回滚 |
 | 12:00-13:30 | 质量结果 | `bash scripts/quality_gate.sh backend/tests` | 20 tests + Ruff + Black + whitespace 全通过 |
@@ -23,7 +25,7 @@
 
 ## Automation A 讲稿与展示
 
-先打开 `AGENTS.md`，指出四条规则：只改 `week5/`、新增行为必须测试、并发 Agent 使用独立 worktree、Agent 不得自行 merge/push。
+先打开 `docs/AGENT_RULES_ZH.md`，指出四条规则：只改 `week5/`、新增行为必须测试、并发 Agent 使用独立 worktree、Agent 不得自行 merge/push。
 
 再打开 `.warp/workflows/week5-quality-gate.yaml` 和 `scripts/quality_gate.sh`：
 
@@ -88,7 +90,7 @@ PYTHONPATH=. /root/miniconda3/envs/cs146s/bin/python -m uvicorn \
 - 提交报告：`writeup.md`；中文讲解参考：`writeup_zh.md`。
 - 逐分钟演示顺序：`docs/REPORT_RUNBOOK.md`。
 - 完整中文讲稿与问答：`docs/LAB_PRESENTATION_GUIDE.md`。
-- 架构和 API 语义：`docs/IMPLEMENTATION.md`。
-- 两个 Agent 的完整 Prompt：`docs/WARP_MULTI_AGENT_PLAYBOOK.md`。
+- 架构和 API 语义：`docs/IMPLEMENTATION_ZH.md`。
+- 两个工作单元的完整 Prompt：`docs/WARP_MULTI_AGENT_PLAYBOOK_ZH.md`。
 - 质量门 Prompt：`docs/warp/QUALITY_GATE_PROMPT.md`。
-- 可复现实验证据：`docs/warp/EVIDENCE.md`。
+- 可复现实验证据：`docs/warp/EVIDENCE_ZH.md`。

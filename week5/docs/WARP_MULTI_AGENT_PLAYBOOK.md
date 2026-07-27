@@ -49,13 +49,14 @@ git merge --no-ff week5-task4
 
 If the second merge conflicts in `frontend/app.js` or `frontend/index.html`, ask a third coordinator conversation to preserve both feature sets. Inspect the resolved diff before committing, then run **Week 5 Quality Gate**.
 
-## 4. Evidence checklist
+## 4. Audit contract
 
-- Screenshot both named Agent tabs running concurrently.
-- Capture each Agent's task prompt and final commit hash.
-- Record start/end times and any permission prompts.
-- Capture the merge conflict or clean merge result.
-- Capture the final Quality Gate PASS block.
-- Share the saved Prompt and paste its link into `writeup.md`.
+A complete Agent run should retain:
 
-Never claim that a Codex, Claude Code, or ordinary shell run was a Warp Agent run. The evidence must come from the Warp interface.
+- Each named Agent's task prompt and final commit hash.
+- Start/end times and permission decisions.
+- The merge conflict or clean merge result.
+- The final Quality Gate PASS result.
+- The Saved Prompt link when Warp generates one.
+
+Codex, Claude Code, and ordinary shell runs are not equivalent to Warp Agent sessions. Only evidence produced by the Warp interface should be identified as Warp Agent evidence.
