@@ -1,3 +1,28 @@
+from sqlalchemy import create_engine, inspect, text
+
+from backend.app.db import ensure_project_relationship_schema
+
+
+def test_existing_database_gets_project_relationship_column():
+    legacy_engine = create_engine("sqlite:///:memory:")
+    with legacy_engine.begin() as connection:
+        connection.execute(text("CREATE TABLE projects (id INTEGER PRIMARY KEY)"))
+        connection.execute(
+            text(
+                "CREATE TABLE action_items ("
+                "id INTEGER PRIMARY KEY, "
+                "description TEXT NOT NULL, "
+                "completed BOOLEAN NOT NULL"
+                ")"
+            )
+        )
+
+    ensure_project_relationship_schema(legacy_engine)
+
+    columns = {column["name"] for column in inspect(legacy_engine).get_columns("action_items")}
+    assert "project_id" in columns
+
+
 def test_project_lifecycle_and_action_item_relationship(client):
     project_response = client.post(
         "/projects/",

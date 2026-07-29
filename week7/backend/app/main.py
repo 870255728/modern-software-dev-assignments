@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from .db import apply_seed_if_needed, engine
+from .db import apply_seed_if_needed, engine, ensure_project_relationship_schema
 from .models import Base
 from .routers import action_items as action_items_router
 from .routers import notes as notes_router
@@ -23,6 +23,7 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 @app.on_event("startup")
 def startup_event() -> None:
     Base.metadata.create_all(bind=engine)
+    ensure_project_relationship_schema()
     apply_seed_if_needed()
 
 
