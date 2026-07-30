@@ -20,7 +20,9 @@ def test_existing_database_gets_project_relationship_column():
     ensure_project_relationship_schema(legacy_engine)
 
     columns = {column["name"] for column in inspect(legacy_engine).get_columns("action_items")}
+    indexes = {index["name"] for index in inspect(legacy_engine).get_indexes("action_items")}
     assert "project_id" in columns
+    assert "ix_action_items_project_id" in indexes
 
 
 def test_project_lifecycle_and_action_item_relationship(client):
