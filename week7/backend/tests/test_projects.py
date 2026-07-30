@@ -25,6 +25,29 @@ def test_existing_database_gets_project_relationship_column():
     assert "ix_action_items_project_id" in indexes
 
 
+def test_partial_migration_gets_missing_relationship_index():
+    partially_migrated_engine = create_engine("sqlite:///:memory:")
+    with partially_migrated_engine.begin() as connection:
+        connection.execute(text("CREATE TABLE projects (id INTEGER PRIMARY KEY)"))
+        connection.execute(
+            text(
+                "CREATE TABLE action_items ("
+                "id INTEGER PRIMARY KEY, "
+                "description TEXT NOT NULL, "
+                "completed BOOLEAN NOT NULL, "
+                "project_id INTEGER REFERENCES projects(id)"
+                ")"
+            )
+        )
+
+    ensure_project_relationship_schema(partially_migrated_engine)
+
+    indexes = {
+        index["name"] for index in inspect(partially_migrated_engine).get_indexes("action_items")
+    }
+    assert "ix_action_items_project_id" in indexes
+
+
 def test_project_lifecycle_and_action_item_relationship(client):
     project_response = client.post(
         "/projects/",
@@ -60,9 +83,21 @@ def test_project_lifecycle_and_action_item_relationship(client):
 
 
 def test_project_relationship_validation_and_duplicate_names(client):
-    payload = {"name": "Roadmap", "description": ""}
-    assert client.post("/projects/", json=payload).status_code == 201
-    assert client.post("/projects/", json=payload).status_code == 409
+    created = client.post(
+        "/projects/",
+        json={"name": "  Roadmap  ", "description": ""},
+    )
+    assert created.status_code == 201
+    assert created.json()["name"] == "Roadmap"
+    assert client.post("/projects/", json={"name": "Roadmap"}).status_code == 409
+    assert client.post("/projects/", json={"name": "   "}).status_code == 422
+    assert (
+        client.patch(
+            f"/projects/{created.json()['id']}",
+            json={"name": "\t"},
+        ).status_code
+        == 422
+    )
 
     missing_project_item = client.post(
         "/action-items/",

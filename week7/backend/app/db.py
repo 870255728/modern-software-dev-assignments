@@ -64,17 +64,17 @@ def ensure_project_relationship_schema(bind: Engine = engine) -> None:
         return
 
     columns = {column["name"] for column in inspector.get_columns("action_items")}
-    if "project_id" not in columns:
-        with bind.begin() as conn:
+    with bind.begin() as conn:
+        if "project_id" not in columns:
             conn.execute(
                 text(
                     "ALTER TABLE action_items "
                     "ADD COLUMN project_id INTEGER REFERENCES projects(id)"
                 )
             )
-            conn.execute(
-                text(
-                    "CREATE INDEX IF NOT EXISTS ix_action_items_project_id "
-                    "ON action_items (project_id)"
-                )
+        conn.execute(
+            text(
+                "CREATE INDEX IF NOT EXISTS ix_action_items_project_id "
+                "ON action_items (project_id)"
             )
+        )
