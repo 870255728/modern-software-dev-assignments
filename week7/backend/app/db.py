@@ -4,7 +4,8 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, inspect, text
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
 load_dotenv()
@@ -56,3 +57,24 @@ def apply_seed_if_needed() -> None:
                     conn.execute(text(statement))
 
 
+def ensure_project_relationship_schema(bind: Engine = engine) -> None:
+    """Add the nullable project relationship to databases created before Week 7."""
+    inspector = inspect(bind)
+    if not inspector.has_table("action_items"):
+        return
+
+    columns = {column["name"] for column in inspector.get_columns("action_items")}
+    with bind.begin() as conn:
+        if "project_id" not in columns:
+            conn.execute(
+                text(
+                    "ALTER TABLE action_items "
+                    "ADD COLUMN project_id INTEGER REFERENCES projects(id)"
+                )
+            )
+        conn.execute(
+            text(
+                "CREATE INDEX IF NOT EXISTS ix_action_items_project_id "
+                "ON action_items (project_id)"
+            )
+        )
